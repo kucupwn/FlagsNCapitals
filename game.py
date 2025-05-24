@@ -15,6 +15,7 @@ class Flags:
         self.height = 720
         self.flags_dir = "flags"
         self.flag_list = self.get_flag_list()
+        self.checked_flags = []
         self.current_flag_name = ""
         self.current_flag_img = None
         self.running = True
@@ -36,8 +37,20 @@ class Flags:
         return [flag for flag in os.listdir(self.flags_dir)]
 
     def load_random_flag(self):
-        filename = random.choice(self.flag_list)
-        self.current_flag_name = os.path.splitext(filename)[0]
+        if len(self.checked_flags) == len(self.flag_list):
+            self.current_flag_img = None
+            self.answer_label.set_answer("All flags are completed")
+            return
+
+        while True:
+            filename = random.choice(self.flag_list)
+            self.current_flag_name = os.path.splitext(filename)[0]
+
+            if self.current_flag_name in self.checked_flags:
+                continue
+            else:
+                break
+
         img_path = os.path.join(self.flags_dir, filename)
         self.current_flag_img = pygame.image.load(img_path)
         self.answer_label.set_answer(self.current_flag_name)
@@ -66,6 +79,7 @@ class Flags:
 
         if matches >= 1 or (len(correct_parts) == 1 and matches == 1):
             self.answer_label.reveal()
+            self.checked_flags.append(self.current_flag_name)
 
     def event_handler(self):
         for event in pygame.event.get():
