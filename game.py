@@ -21,8 +21,8 @@ class Flags:
 
         self.init_pygame()
         self.input_box = InputBox(self.width, self.height)
-        self.give_up_button = Button("Give Up", 20, 20, 120, 40)
-        self.next_button = Button("Next", self.width - 140, 20, 120, 40)
+        self.give_up_button = Button("Give Up", 40, 50, 120, 40)
+        self.next_button = Button("Next", self.width - 160, 50, 120, 40)
         self.answer_label = AnswerLabel()
         self.load_random_flag()
 
