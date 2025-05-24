@@ -8,7 +8,7 @@ class AnswerLabel:
 
     def set_answer(self, answer: str):
         self.revealed = False
-        self.answer_text = answer.capitalize()
+        self.answer_text = answer.title()
 
     def reveal(self):
         self.revealed = True

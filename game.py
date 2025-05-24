@@ -1,6 +1,7 @@
 import pygame
 import os
 import random
+from fuzzywuzzy import fuzz
 from input_box import InputBox
 from button import Button
 from answer_label import AnswerLabel
@@ -16,6 +17,7 @@ class Flags:
         self.flag_list = self.get_flag_list()
         self.current_flag_name = ""
         self.current_flag_img = None
+        self.guessed = False
         self.running = True
 
         self.init_pygame()
@@ -36,10 +38,35 @@ class Flags:
 
     def load_random_flag(self):
         filename = random.choice(self.flag_list)
-        self.current_flag_name = os.path.splitext(filename)[0].lower()
+        self.current_flag_name = os.path.splitext(filename)[0]
         img_path = os.path.join(self.flags_dir, filename)
         self.current_flag_img = pygame.image.load(img_path)
         self.answer_label.set_answer(self.current_flag_name)
+        self.current_flag_name_lower = [
+            word.lower() for word in self.current_flag_name.split()
+        ]
+
+    def check_answer(self, answer: str):
+        exclude_words = ["and", "of", "the"]
+        threshold = 80
+        matches = 0
+
+        correct_parts = [
+            word for word in self.current_flag_name_lower if word not in exclude_words
+        ]
+        answer_parts = [
+            word.lower() for word in answer.split() if word not in exclude_words
+        ]
+
+        for answer_word in answer_parts:
+            for correct_word in correct_parts:
+                similarity = fuzz.ratio(answer_word, correct_word)
+                if similarity >= threshold:
+                    matches += 1
+                    break
+
+        if matches >= 2 or (len(correct_parts) == 1 and matches == 1):
+            self.answer_label.reveal()
 
     def event_handler(self):
         for event in pygame.event.get():
@@ -49,7 +76,7 @@ class Flags:
 
             input_text = self.input_box.event_handler(event)
             if input_text:
-                print(input_text)
+                self.check_answer(input_text)
 
             if self.next_button.is_clicked(event):
                 self.load_random_flag()
