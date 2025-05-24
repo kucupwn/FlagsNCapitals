@@ -3,6 +3,7 @@ import os
 import random
 from input_box import InputBox
 from button import Button
+from answer_label import AnswerLabel
 
 BACKGROUND = (255, 255, 255)
 
@@ -21,6 +22,7 @@ class Flags:
         self.input_box = InputBox(self.width, self.height)
         self.give_up_button = Button("Give Up", 20, 20, 120, 40)
         self.next_button = Button("Next", self.width - 140, 20, 120, 40)
+        self.answer_label = AnswerLabel()
         self.load_random_flag()
 
     def init_pygame(self):
@@ -37,6 +39,7 @@ class Flags:
         self.current_flag_name = os.path.splitext(filename)[0].lower()
         img_path = os.path.join(self.flags_dir, filename)
         self.current_flag_img = pygame.image.load(img_path)
+        self.answer_label.set_answer(self.current_flag_name)
 
     def event_handler(self):
         for event in pygame.event.get():
@@ -61,6 +64,8 @@ class Flags:
                 center=(self.width // 2, self.height // 2 - 30)
             )
             self.screen.blit(self.current_flag_img, rect)
+
+            self.answer_label.draw(self.screen, self.width // 2, rect.bottom + 100)
 
         pygame.display.flip()
 
