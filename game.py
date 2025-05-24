@@ -13,11 +13,13 @@ class Flags:
         self.height = 720
         self.flags_dir = "flags"
         self.flag_list = self.get_flag_list()
-        self.current_flag = None
+        self.current_flag_name = ""
+        self.current_flag_img = None
         self.running = True
 
         self.init_pygame()
         self.input_box = InputBox(self.width, self.height)
+        self.load_random_flag()
 
     def init_pygame(self):
         pygame.init()
@@ -27,6 +29,12 @@ class Flags:
 
     def get_flag_list(self):
         return [flag for flag in os.listdir(self.flags_dir)]
+
+    def load_random_flag(self):
+        filename = random.choice(self.flag_list)
+        self.current_flag_name = os.path.splitext(filename)[0].lower()
+        img_path = os.path.join(self.flags_dir, filename)
+        self.current_flag_img = pygame.image.load(img_path)
 
     def event_handler(self):
         for event in pygame.event.get():
@@ -43,6 +51,12 @@ class Flags:
         self.screen.fill(BACKGROUND)
         self.input_box.add_search_label(self.screen)
         self.input_box.draw(self.screen)
+
+        if self.current_flag_img:
+            rect = self.current_flag_img.get_rect(
+                center=(self.width // 2, self.height // 2 - 30)
+            )
+            self.screen.blit(self.current_flag_img, rect)
 
         pygame.display.flip()
 
