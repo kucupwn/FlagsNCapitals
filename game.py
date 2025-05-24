@@ -6,7 +6,7 @@ from input_box import InputBox
 from button import Button
 from answer_label import AnswerLabel
 
-BACKGROUND = (255, 255, 255)
+BACKGROUND = (255, 240, 210)
 
 
 class Flags:
