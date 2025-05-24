@@ -1,8 +1,8 @@
 import pygame
 import os
 import random
-import time
 from input_box import InputBox
+from button import Button
 
 BACKGROUND = (255, 255, 255)
 
@@ -19,6 +19,8 @@ class Flags:
 
         self.init_pygame()
         self.input_box = InputBox(self.width, self.height)
+        self.give_up_button = Button("Give Up", 20, 20, 120, 40)
+        self.next_button = Button("Next", self.width - 140, 20, 120, 40)
         self.load_random_flag()
 
     def init_pygame(self):
@@ -51,6 +53,8 @@ class Flags:
         self.screen.fill(BACKGROUND)
         self.input_box.add_search_label(self.screen)
         self.input_box.draw(self.screen)
+        self.give_up_button.draw(self.screen)
+        self.next_button.draw(self.screen)
 
         if self.current_flag_img:
             rect = self.current_flag_img.get_rect(
