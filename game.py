@@ -51,6 +51,9 @@ class Flags:
             if input_text:
                 print(input_text)
 
+            if self.next_button.is_clicked(event):
+                self.load_random_flag()
+
     def update(self):
         self.clock.tick(60)
         self.screen.fill(BACKGROUND)
