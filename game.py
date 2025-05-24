@@ -112,13 +112,16 @@ class Flags:
         self.give_up_button.draw(self.screen)
         self.next_button.draw(self.screen)
 
+        y_pos = self.height // 2 - 30
+
         if self.current_flag_img:
             rect = self.current_flag_img.get_rect(
                 center=(self.width // 2, self.height // 2 - 30)
             )
             self.screen.blit(self.current_flag_img, rect)
+            y_pos = rect.bottom + 100
 
-            self.answer_label.draw(self.screen, self.width // 2, rect.bottom + 100)
+        self.answer_label.draw(self.screen, self.width // 2, y_pos)
 
         pygame.display.flip()
 
