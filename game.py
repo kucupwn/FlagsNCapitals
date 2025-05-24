@@ -17,7 +17,6 @@ class Flags:
         self.flag_list = self.get_flag_list()
         self.current_flag_name = ""
         self.current_flag_img = None
-        self.guessed = False
         self.running = True
 
         self.init_pygame()
@@ -78,12 +77,17 @@ class Flags:
             if input_text:
                 self.check_answer(input_text)
 
-            if self.next_button.is_clicked(event):
+            if self.next_button.is_clicked(event) or (
+                input_text == ""
+                and event.type == pygame.KEYDOWN
+                and event.key == pygame.K_RETURN
+            ):
                 self.load_random_flag()
                 self.input_box.set_active()
 
             if self.give_up_button.is_clicked(event):
                 self.answer_label.reveal()
+                self.input_box.set_active()
 
     def update(self):
         self.clock.tick(60)
