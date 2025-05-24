@@ -54,6 +54,9 @@ class Flags:
             if self.next_button.is_clicked(event):
                 self.load_random_flag()
 
+            if self.give_up_button.is_clicked(event):
+                self.answer_label.reveal()
+
     def update(self):
         self.clock.tick(60)
         self.screen.fill(BACKGROUND)
