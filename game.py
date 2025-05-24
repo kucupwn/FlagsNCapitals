@@ -40,6 +40,7 @@ class Flags:
         if len(self.checked_flags) == len(self.flag_list):
             self.current_flag_img = None
             self.answer_label.set_answer("All flags are completed")
+            self.answer_label.reveal()
             return
 
         while True:
