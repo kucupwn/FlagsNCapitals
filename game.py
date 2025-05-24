@@ -78,9 +78,7 @@ class Flags:
                 self.check_answer(input_text)
 
             if self.next_button.is_clicked(event) or (
-                input_text == ""
-                and event.type == pygame.KEYDOWN
-                and event.key == pygame.K_RETURN
+                event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT
             ):
                 self.load_random_flag()
                 self.input_box.set_active()
