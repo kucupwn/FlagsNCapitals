@@ -9,7 +9,7 @@ urls = [
 ]
 headers = {"User-Agent": "Mozilla/5.0"}
 
-os.makedirs("images", exist_ok=True)
+os.makedirs("flags", exist_ok=True)
 
 
 for url in urls:
@@ -26,7 +26,7 @@ for url in urls:
             ext = os.path.splitext(parsed.path)[-1]
 
             filename = f"{alt_text}{ext}"
-            filepath = os.path.join("images", filename)
+            filepath = os.path.join("flags", filename)
 
             file_response = requests.get(file_url, headers=headers)
             if file_response.status_code == 200:

@@ -8,6 +8,7 @@ class Flags:
     def __init__(self):
         self.width = 1280
         self.height = 720
+        self.flags_dir = "flags"
         self.running = True
 
         self.init_pygame()
