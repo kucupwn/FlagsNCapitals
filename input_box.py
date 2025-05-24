@@ -28,6 +28,10 @@ class InputBox:
         txt_surface = self.font.render("Type here:", True, BLACK)
         screen.blit(txt_surface, (self.input_box.x, self.input_box.y - 40))
 
+    def set_active(self):
+        self.input_active = True
+        self.input_color = COLOR_ACTIVE
+
     def event_handler(self, event: pygame.event.Event) -> None:
         """
         Handles input box events: active input box, input str, backspace, ctrl+backspace

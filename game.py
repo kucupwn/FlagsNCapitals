@@ -80,6 +80,7 @@ class Flags:
 
             if self.next_button.is_clicked(event):
                 self.load_random_flag()
+                self.input_box.set_active()
 
             if self.give_up_button.is_clicked(event):
                 self.answer_label.reveal()
