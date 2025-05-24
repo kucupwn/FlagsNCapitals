@@ -1,4 +1,7 @@
 import pygame
+import os
+import random
+import time
 from input_box import InputBox
 
 BACKGROUND = (255, 255, 255)
@@ -9,6 +12,8 @@ class Flags:
         self.width = 1280
         self.height = 720
         self.flags_dir = "flags"
+        self.flag_list = self.get_flag_list()
+        self.current_flag = None
         self.running = True
 
         self.init_pygame()
@@ -19,6 +24,9 @@ class Flags:
         self.clock = pygame.time.Clock()
         self.screen = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption("Flags")
+
+    def get_flag_list(self):
+        return [flag for flag in os.listdir(self.flags_dir)]
 
     def event_handler(self):
         for event in pygame.event.get():
