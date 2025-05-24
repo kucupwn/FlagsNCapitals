@@ -64,7 +64,7 @@ class Flags:
                     matches += 1
                     break
 
-        if matches >= 2 or (len(correct_parts) == 1 and matches == 1):
+        if matches >= 1 or (len(correct_parts) == 1 and matches == 1):
             self.answer_label.reveal()
 
     def event_handler(self):
@@ -85,7 +85,9 @@ class Flags:
                 self.load_random_flag()
                 self.input_box.set_active()
 
-            if self.give_up_button.is_clicked(event):
+            if self.give_up_button.is_clicked(event) or (
+                event.type == pygame.KEYDOWN and event.key == pygame.K_F1
+            ):
                 self.answer_label.reveal()
                 self.input_box.set_active()
 
