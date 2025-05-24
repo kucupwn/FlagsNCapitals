@@ -25,7 +25,9 @@ class Flags:
             if event.type == pygame.QUIT:
                 self.running = False
 
-            self.input_box.event_handler(event)
+            input_text = self.input_box.event_handler(event)
+            if input_text:
+                print(input_text)
 
     def update(self):
         self.clock.tick(60)

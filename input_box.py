@@ -57,8 +57,11 @@ class InputBox:
                 # Input any character
                 self.input_text += event.unicode
 
-            # Return for continous display
-            return self.input_text.lower().strip()
+            if event.key == pygame.K_RETURN:
+                result = self.input_text.lower().strip()
+                self.input_text = ""
+
+                return result
 
     def draw(self, screen: pygame.Surface) -> None:
         """
