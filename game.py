@@ -24,7 +24,7 @@ class Flags:
 
         self.init_pygame()
         self.input_box = InputBox(self.width, self.height)
-        self.give_up_button = Button("Give Up", 40, 50, 120, 40)
+        self.give_up_button = Button("Show", 40, 50, 120, 40)
         self.next_button = Button("Next", self.width - 160, 50, 120, 40)
         self.answer_label = AnswerLabel()
         self.counter = Counter(self.width - 100, self.height - 50)
