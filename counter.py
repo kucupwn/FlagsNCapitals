@@ -3,7 +3,7 @@ import pygame
 
 class Counter:
     def __init__(self, x, y):
-        self.font = pygame.font.Font(None, 64)
+        self.font = pygame.font.Font(None, 48)
         self.x = x
         self.y = y
 
