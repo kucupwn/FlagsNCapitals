@@ -5,6 +5,7 @@ from fuzzywuzzy import fuzz
 from input_box import InputBox
 from button import Button
 from answer_label import AnswerLabel
+from counter import Counter
 
 BACKGROUND = (255, 240, 210)
 
@@ -25,6 +26,7 @@ class Flags:
         self.give_up_button = Button("Give Up", 40, 50, 120, 40)
         self.next_button = Button("Next", self.width - 160, 50, 120, 40)
         self.answer_label = AnswerLabel()
+        self.counter = Counter(self.width - 100, self.height - 50)
         self.load_random_flag()
 
     def init_pygame(self):
@@ -111,6 +113,7 @@ class Flags:
         self.input_box.draw(self.screen)
         self.give_up_button.draw(self.screen)
         self.next_button.draw(self.screen)
+        self.counter.draw(self.screen, len(self.checked_flags), len(self.flag_list))
 
         y_pos = self.height // 2 - 30
 
