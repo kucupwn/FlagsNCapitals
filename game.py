@@ -20,6 +20,7 @@ class Flags:
         self.current_flag_name = ""
         self.current_flag_img = None
         self.running = True
+        self.finished = False
 
         self.init_pygame()
         self.input_box = InputBox(self.width, self.height)
@@ -27,6 +28,7 @@ class Flags:
         self.next_button = Button("Next", self.width - 160, 50, 120, 40)
         self.answer_label = AnswerLabel()
         self.counter = Counter(self.width - 100, self.height - 50)
+        self.win_img = pygame.image.load("utils/Congrat.PNG")
         self.load_random_flag()
 
     def init_pygame(self):
@@ -41,8 +43,7 @@ class Flags:
     def load_random_flag(self):
         if len(self.checked_flags) == len(self.flag_list):
             self.current_flag_img = None
-            self.answer_label.set_answer("All flags are completed")
-            self.answer_label.reveal()
+            self.finished = True
             return
 
         while True:
@@ -106,25 +107,33 @@ class Flags:
                 self.answer_label.reveal()
                 self.input_box.set_active()
 
+    def display_win(self):
+        self.answer_label.set_answer("All flags are completed")
+        self.answer_label.reveal()
+        self.display_image(self.win_img)
+
+    def display_image(self, image):
+        rect = image.get_rect(center=(self.width // 2, self.height // 2 - 30))
+        self.screen.blit(image, rect)
+        self.y_pos = rect.bottom + 60
+
     def update(self):
         self.clock.tick(60)
         self.screen.fill(BACKGROUND)
+
+        if self.finished:
+            self.display_win()
+
         self.input_box.add_search_label(self.screen)
         self.input_box.draw(self.screen)
         self.give_up_button.draw(self.screen)
         self.next_button.draw(self.screen)
         self.counter.draw(self.screen, len(self.checked_flags), len(self.flag_list))
 
-        y_pos = self.height // 2 - 30
-
         if self.current_flag_img:
-            rect = self.current_flag_img.get_rect(
-                center=(self.width // 2, self.height // 2 - 30)
-            )
-            self.screen.blit(self.current_flag_img, rect)
-            y_pos = rect.bottom + 100
+            self.display_image(self.current_flag_img)
 
-        self.answer_label.draw(self.screen, self.width // 2, y_pos)
+        self.answer_label.draw(self.screen, self.width // 2, self.y_pos)
 
         pygame.display.flip()
 
