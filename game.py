@@ -21,10 +21,11 @@ class Flags:
         self.current_flag_img = None
         self.running = True
         self.finished = False
+        self.shown = False
 
         self.init_pygame()
         self.input_box = InputBox(self.width, self.height)
-        self.give_up_button = Button("Show", 40, 50, 120, 40)
+        self.show_button = Button("Show", 40, 50, 120, 40)
         self.next_button = Button("Next", self.width - 160, 50, 120, 40)
         self.answer_label = AnswerLabel()
         self.counter = Counter(self.width - 100, self.height - 50)
@@ -95,7 +96,7 @@ class Flags:
                 self.running = False
 
             input_text = self.input_box.event_handler(event)
-            if input_text:
+            if input_text and not self.shown:
                 self.check_answer(input_text)
 
             if self.next_button.is_clicked(event) or (
@@ -104,12 +105,14 @@ class Flags:
                 if not self.is_finished():
                     self.load_random_flag()
                     self.input_box.set_active()
+                    self.shown = False
 
-            if self.give_up_button.is_clicked(event) or (
+            if self.show_button.is_clicked(event) or (
                 event.type == pygame.KEYDOWN and event.key == pygame.K_F1
             ):
                 self.answer_label.reveal()
                 self.input_box.set_active()
+                self.shown = True
 
     def display_win(self):
         self.answer_label.set_answer("All flags are completed")
@@ -130,7 +133,7 @@ class Flags:
 
         self.input_box.add_search_label(self.screen)
         self.input_box.draw(self.screen)
-        self.give_up_button.draw(self.screen)
+        self.show_button.draw(self.screen)
         self.next_button.draw(self.screen)
         self.counter.draw(self.screen, len(self.checked_flags), len(self.flag_list))
 
