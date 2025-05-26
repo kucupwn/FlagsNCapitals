@@ -40,12 +40,15 @@ class Flags:
     def get_flag_list(self):
         return [flag for flag in os.listdir(self.flags_dir)]
 
-    def load_random_flag(self):
+    def is_finished(self) -> bool:
         if len(self.checked_flags) == len(self.flag_list):
             self.current_flag_img = None
             self.finished = True
-            return
+            return True
+        else:
+            return False
 
+    def load_random_flag(self):
         while True:
             filename = random.choice(self.flag_list)
             self.current_flag_name = os.path.splitext(filename)[0]
@@ -98,8 +101,9 @@ class Flags:
             if self.next_button.is_clicked(event) or (
                 event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT
             ):
-                self.load_random_flag()
-                self.input_box.set_active()
+                if not self.is_finished():
+                    self.load_random_flag()
+                    self.input_box.set_active()
 
             if self.give_up_button.is_clicked(event) or (
                 event.type == pygame.KEYDOWN and event.key == pygame.K_F1
