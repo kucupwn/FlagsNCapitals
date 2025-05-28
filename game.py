@@ -19,6 +19,9 @@ class Flags:
         self.checked_flags = []
         self.current_flag_name = ""
         self.current_flag_img = None
+        self.image_container = pygame.Rect(
+            self.width // 2 - 200, self.height // 2 - 150, 400, 300
+        )
         self.running = True
         self.finished = False
         self.shown = False
@@ -49,6 +52,18 @@ class Flags:
         else:
             return False
 
+    def scale_image(self, image: pygame.Surface):
+        img_width, img_height = image.get_size()
+        container_width, container_height = self.image_container.size
+
+        scale_width = container_width / img_width
+        scale_height = container_height / img_height
+
+        scale = min(scale_width, scale_height)
+        new_size = (int(img_width * scale), int(img_height * scale))
+
+        return pygame.transform.smoothscale(image, new_size)
+
     def load_random_flag(self):
         while True:
             filename = random.choice(self.flag_list)
@@ -60,7 +75,9 @@ class Flags:
                 break
 
         img_path = os.path.join(self.flags_dir, filename)
-        self.current_flag_img = pygame.image.load(img_path)
+        image = pygame.image.load(img_path).convert_alpha()
+        self.current_flag_img = self.scale_image(image)
+
         self.answer_label.set_answer(self.current_flag_name)
         self.current_flag_name_lower = [
             word.lower() for word in self.current_flag_name.split()
@@ -120,7 +137,7 @@ class Flags:
         self.display_image(self.win_img)
 
     def display_image(self, image):
-        rect = image.get_rect(center=(self.width // 2, self.height // 2 - 30))
+        rect = image.get_rect(center=self.image_container.center)
         self.screen.blit(image, rect)
         self.y_pos = rect.bottom + 60
 
