@@ -22,6 +22,7 @@ class Flags:
         self.image_container = pygame.Rect(
             self.width // 2 - 200, self.height // 2 - 150, 400, 300
         )
+        self.answer_label_y_pos = self.image_container.bottom + 60
         self.running = True
         self.finished = False
         self.shown = False
@@ -139,7 +140,9 @@ class Flags:
     def display_image(self, image):
         rect = image.get_rect(center=self.image_container.center)
         self.screen.blit(image, rect)
-        self.y_pos = rect.bottom + 60
+
+        if self.finished:
+            self.answer_label_y_pos = self.image_container.bottom + 120
 
     def update(self):
         self.clock.tick(60)
@@ -157,7 +160,7 @@ class Flags:
         if self.current_flag_img:
             self.display_image(self.current_flag_img)
 
-        self.answer_label.draw(self.screen, self.width // 2, self.y_pos)
+        self.answer_label.draw(self.screen, self.width // 2, self.answer_label_y_pos)
 
         pygame.display.flip()
 
