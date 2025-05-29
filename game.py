@@ -2,10 +2,10 @@ import pygame
 import os
 import random
 from fuzzywuzzy import fuzz
-from input_box import InputBox
-from button import Button
-from answer_label import AnswerLabel
-from counter import Counter
+from ui_components.input_box import InputBox
+from ui_components.button import Button
+from ui_components.answer_label import AnswerLabel
+from ui_components.counter import Counter
 
 BACKGROUND = (255, 240, 210)
 
