@@ -11,7 +11,7 @@ BACKGROUND = (255, 240, 210)
 
 
 class Flags:
-    def __init__(self):
+    def __init__(self) -> None:
         self.width = 1280
         self.height = 720
         self.flags_dir = "flags"
@@ -36,16 +36,28 @@ class Flags:
         self.win_img = pygame.image.load("utils/Congrat.PNG")
         self.load_random_flag()
 
-    def init_pygame(self):
+    def init_pygame(self) -> None:
+        """
+        Initiatiates pygame with clock and window caption
+        """
+
         pygame.init()
         self.clock = pygame.time.Clock()
         self.screen = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption("Flags")
 
-    def get_flag_list(self):
+    def get_flag_list(self) -> list:
+        """
+        Returns flag list as list (containing extension)
+        """
+
         return [flag for flag in os.listdir(self.flags_dir)]
 
     def is_finished(self) -> bool:
+        """
+        Checks if all flags are guessed correctly
+        """
+
         if len(self.checked_flags) == len(self.flag_list):
             self.current_flag_img = None
             self.finished = True
@@ -53,7 +65,11 @@ class Flags:
         else:
             return False
 
-    def scale_image(self, image: pygame.Surface):
+    def scale_image(self, image: pygame.Surface) -> pygame.Surface:
+        """
+        Scales image to fit container for homogenous size
+        """
+
         img_width, img_height = image.get_size()
         container_width, container_height = self.image_container.size
 
@@ -65,7 +81,12 @@ class Flags:
 
         return pygame.transform.smoothscale(image, new_size)
 
-    def load_random_flag(self):
+    def load_random_flag(self) -> None:
+        """
+        Loads a scaled random flag
+        Sets as current answer
+        """
+
         while True:
             filename = random.choice(self.flag_list)
             self.current_flag_name = os.path.splitext(filename)[0]
@@ -84,7 +105,14 @@ class Flags:
             word.lower() for word in self.current_flag_name.split()
         ]
 
-    def check_answer(self, answer: str):
+    def check_answer(self, answer: str) -> None:
+        """
+        Checks user input
+        Using fuzzywuzzy for handling typos
+        Checks, if any word (excluding some, like 'the') matches
+        On correct input, reveals answer, also adds to checked flags
+        """
+
         exclude_words = ["and", "of", "the"]
         threshold = 80
         matches = 0
@@ -107,7 +135,11 @@ class Flags:
             self.answer_label.reveal()
             self.checked_flags.append(self.current_flag_name)
 
-    def event_handler(self):
+    def event_handler(self) -> None:
+        """
+        Handles exit, input, buttons
+        """
+
         for event in pygame.event.get():
             # Handle exit
             if event.type == pygame.QUIT:
@@ -132,19 +164,32 @@ class Flags:
                 self.input_box.set_active()
                 self.shown = True
 
-    def display_win(self):
+    def display_win(self) -> None:
+        """
+        Displays win image and label
+        """
+
         self.answer_label.set_answer("All flags are completed")
         self.answer_label.reveal()
         self.display_image(self.win_img)
 
-    def display_image(self, image):
+    def display_image(self, image: pygame.Surface) -> None:
+        """
+        Displays image in container
+        Special rule for answer label on win
+        """
+
         rect = image.get_rect(center=self.image_container.center)
         self.screen.blit(image, rect)
 
         if self.finished:
             self.answer_label_y_pos = self.image_container.bottom + 120
 
-    def update(self):
+    def update(self) -> None:
+        """
+        Update function for displaying everything
+        """
+
         self.clock.tick(60)
         self.screen.fill(BACKGROUND)
 
@@ -164,7 +209,11 @@ class Flags:
 
         pygame.display.flip()
 
-    def main_loop(self):
+    def main_loop(self) -> None:
+        """
+        Main logic wrapped here
+        """
+
         while self.running:
             self.event_handler()
             self.update()
