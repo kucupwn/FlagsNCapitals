@@ -58,7 +58,7 @@ class Flags:
         Checks if all flags are guessed correctly
         """
 
-        if len(self.checked_flags) == 1:
+        if len(self.checked_flags) == len(self.flag_list):
             self.current_flag_img = None
             self.finished = True
             return True
