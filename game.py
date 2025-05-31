@@ -58,7 +58,7 @@ class Flags:
         Checks if all flags are guessed correctly
         """
 
-        if len(self.checked_flags) == len(self.flag_list):
+        if len(self.checked_flags) == 1:
             self.current_flag_img = None
             self.finished = True
             return True
@@ -183,11 +183,12 @@ class Flags:
         self.screen.blit(image, rect)
 
         if self.finished:
-            self.answer_label_y_pos = self.image_container.bottom + 120
+            self.answer_label_y_pos = rect.top - 60
 
     def update(self) -> None:
         """
         Update function for displaying everything
+        Displays ui elements until finished
         """
 
         self.clock.tick(60)
@@ -195,12 +196,12 @@ class Flags:
 
         if self.finished:
             self.display_win()
-
-        self.input_box.add_search_label(self.screen)
-        self.input_box.draw(self.screen)
-        self.show_button.draw(self.screen)
-        self.next_button.draw(self.screen)
-        self.counter.draw(self.screen, len(self.checked_flags), len(self.flag_list))
+        else:
+            self.input_box.add_search_label(self.screen)
+            self.input_box.draw(self.screen)
+            self.show_button.draw(self.screen)
+            self.next_button.draw(self.screen)
+            self.counter.draw(self.screen, len(self.checked_flags), len(self.flag_list))
 
         if self.current_flag_img:
             self.display_image(self.current_flag_img)
