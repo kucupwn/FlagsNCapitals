@@ -7,13 +7,12 @@ from ui_components.button import Button
 from ui_components.answer_label import AnswerLabel
 from ui_components.counter import Counter
 
-BACKGROUND = (255, 240, 210)
-
 
 class Flags:
     def __init__(self) -> None:
         self.width = 1280
         self.height = 720
+        self.background_color = (255, 240, 210)
         self.flags_dir = "flags"
         self.flag_list = self.get_flag_list()
         self.checked_flags = []
@@ -192,7 +191,7 @@ class Flags:
         """
 
         self.clock.tick(60)
-        self.screen.fill(BACKGROUND)
+        self.screen.fill(self.background_color)
 
         if self.finished:
             self.display_win()
