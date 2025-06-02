@@ -1,11 +1,12 @@
 import pygame
 import os
 import random
-from fuzzywuzzy import fuzz
+from rapidfuzz import fuzz
 from ui_components.input_box import InputBox
 from ui_components.button import Button
 from ui_components.answer_label import AnswerLabel
 from ui_components.counter import Counter
+from utils.img_loader import get_resource_path
 
 
 class Flags:
@@ -32,7 +33,7 @@ class Flags:
         self.next_button = Button("Next", self.width - 160, 50, 120, 40)
         self.answer_label = AnswerLabel()
         self.counter = Counter(self.width - 100, self.height - 50)
-        self.win_img = pygame.image.load("utils/Congrat.PNG")
+        self.win_img = pygame.image.load(get_resource_path("utils/Congrat.PNG"))
         self.load_random_flag()
 
     def init_pygame(self) -> None:
@@ -50,7 +51,8 @@ class Flags:
         Returns flag list as list (containing extension)
         """
 
-        return [flag for flag in os.listdir(self.flags_dir)]
+        flags_path = get_resource_path(self.flags_dir)
+        return [flag for flag in os.listdir(flags_path)]
 
     def is_finished(self) -> bool:
         """
@@ -95,7 +97,7 @@ class Flags:
             else:
                 break
 
-        img_path = os.path.join(self.flags_dir, filename)
+        img_path = get_resource_path(os.path.join(self.flags_dir, filename))
         image = pygame.image.load(img_path).convert_alpha()
         self.current_flag_img = self.scale_image(image)
 
