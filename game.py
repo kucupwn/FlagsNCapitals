@@ -110,7 +110,7 @@ class Flags:
 
         self.capitals.set_current_answer(self.current_flag_name)
 
-    def check_answer(self, answer: str) -> None:
+    def check_answer(self, answer: str) -> bool:
         """
         Checks user input
         Using fuzzywuzzy for handling typos
@@ -138,7 +138,7 @@ class Flags:
 
         if matches >= 1 or (len(correct_parts) == 1 and matches == 1):
             self.answer_label.reveal()
-            self.checked_flags.append(self.current_flag_name)
+            return True
 
     def event_handler(self) -> None:
         """
@@ -152,7 +152,14 @@ class Flags:
 
             input_text = self.input_box.event_handler(event)
             if input_text and not self.shown:
-                self.check_answer(input_text)
+                correct_flag = self.check_answer(input_text)
+                if correct_flag:
+                    self.capitals.shown = True
+                    self.shown = True
+
+            capital_result = self.capitals.event_handler(event)
+            if capital_result:
+                self.checked_flags.append(self.current_flag_name)
 
             if self.next_button.is_clicked(event) or (
                 event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT
@@ -161,6 +168,7 @@ class Flags:
                     self.load_random_flag()
                     self.input_box.set_active()
                     self.shown = False
+                    self.capitals.shown = False
 
             if self.show_button.is_clicked(event) or (
                 event.type == pygame.KEYDOWN and event.key == pygame.K_F1
@@ -213,7 +221,8 @@ class Flags:
 
         self.answer_label.draw(self.screen, self.width // 2, self.answer_label_y_pos)
 
-        self.capitals.draw(self.screen)
+        if self.capitals.shown:
+            self.capitals.draw(self.screen)
 
         pygame.display.flip()
 

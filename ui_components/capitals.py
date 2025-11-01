@@ -20,6 +20,7 @@ class Capitals:
             - (self.button_height * 2 + self.spacing)
             - (screen_height * 0.1)
         )
+        self.shown = False
 
     def get_country_capitals(self) -> dict:
         with open("capitals/country_capitals.json", "r", encoding="utf-8") as f:
@@ -60,10 +61,20 @@ class Capitals:
         self.answers = selected_wrong + [self.current_capital]
         shuffle(self.answers)
 
-    def draw(self, screen: pygame.Surface):
+        self.buttons = []
         self.get_buttons()
+
+    def draw(self, screen: pygame.Surface):
         for button in self.buttons:
             button.draw(screen)
 
-    def check_answer(self):
-        pass
+    def event_handler(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            for button in self.buttons:
+                if button.is_clicked(event):
+                    selected = button.text
+                    if selected == self.current_capital:
+                        return True
+                    else:
+                        return False
+        return None
