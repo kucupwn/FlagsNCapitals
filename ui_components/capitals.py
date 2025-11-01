@@ -21,6 +21,7 @@ class Capitals:
             - (screen_height * 0.1)
         )
         self.shown = False
+        self.tried = False
 
     def get_country_capitals(self) -> dict:
         with open("capitals/country_capitals.json", "r", encoding="utf-8") as f:
@@ -61,6 +62,7 @@ class Capitals:
         self.answers = selected_wrong + [self.current_capital]
         shuffle(self.answers)
 
+        self.tried = False
         self.buttons = []
         self.get_buttons()
 
@@ -69,12 +71,14 @@ class Capitals:
             button.draw(screen)
 
     def event_handler(self, event):
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            for button in self.buttons:
-                if button.is_clicked(event):
-                    selected = button.text
-                    if selected == self.current_capital:
-                        return True
-                    else:
-                        return False
-        return None
+        if not self.tried:
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                for button in self.buttons:
+                    if button.is_clicked(event):
+                        self.tried = True
+                        selected = button.text
+                        if selected == self.current_capital:
+                            return True
+                        else:
+                            return False
+            return None
