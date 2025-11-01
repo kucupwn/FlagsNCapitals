@@ -6,6 +6,7 @@ from ui_components.input_box import InputBox
 from ui_components.button import Button
 from ui_components.answer_label import AnswerLabel
 from ui_components.counter import Counter
+from ui_components.capitals import Capitals
 from utils.img_loader import get_resource_path
 
 
@@ -33,6 +34,7 @@ class Flags:
         self.next_button = Button("Next", self.width - 160, 50, 120, 40)
         self.answer_label = AnswerLabel()
         self.counter = Counter(self.width - 100, self.height - 50)
+        self.capitals = Capitals(self.width, self.height)
         self.win_img = pygame.image.load(get_resource_path("utils/Congrat.PNG"))
         self.load_random_flag()
 
@@ -105,6 +107,8 @@ class Flags:
         self.current_flag_name_lower = [
             word.lower() for word in self.current_flag_name.split()
         ]
+
+        self.capitals.set_current_answer(self.current_flag_name)
 
     def check_answer(self, answer: str) -> None:
         """
@@ -208,6 +212,8 @@ class Flags:
             self.display_image(self.current_flag_img)
 
         self.answer_label.draw(self.screen, self.width // 2, self.answer_label_y_pos)
+
+        self.capitals.draw(self.screen)
 
         pygame.display.flip()
 
