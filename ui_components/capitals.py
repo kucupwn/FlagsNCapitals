@@ -11,7 +11,7 @@ class Capitals:
         self.button_height = 60
         self.spacing = 20
         self.current_country = ""
-        self.current_capital = ""
+        self.current_capital = None
         self.answers = []
         self.buttons = []
         self.start_x = (screen_width - (self.button_width * 2 + self.spacing)) // 2
@@ -50,7 +50,9 @@ class Capitals:
                 break
 
         if self.current_capital is None:
-            print("No such country")
+            self.answers = []
+            self.buttons = []
+            self.shown = False
             return
 
         self.get_answers()

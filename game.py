@@ -154,7 +154,10 @@ class Flags:
             if input_text and not self.shown:
                 correct_flag = self.check_answer(input_text)
                 if correct_flag:
-                    self.capitals.shown = True
+                    if self.capitals.current_capital is not None:
+                        self.capitals.shown = True
+                    else:
+                        self.checked_flags.append(self.current_flag_name)
                     self.shown = True
 
             capital_result = self.capitals.event_handler(event)
