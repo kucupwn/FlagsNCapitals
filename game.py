@@ -20,9 +20,9 @@ class Flags:
         self.current_flag_name = ""
         self.current_flag_img = None
         self.image_container = pygame.Rect(
-            self.width // 2 - 200, self.height // 2 - 150, 400, 300
+            self.width // 2 - 200, self.height // 2 - 250, 400, 300
         )
-        self.answer_label_y_pos = self.image_container.bottom + 60
+        self.answer_label_y_pos = self.image_container.bottom + 40
         self.running = True
         self.finished = False
         self.shown = False
