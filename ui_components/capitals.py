@@ -22,6 +22,8 @@ class Capitals:
         )
         self.shown = False
         self.tried = False
+        self.green = (0, 200, 0)
+        self.red = (200, 0, 0)
 
     def get_country_capitals(self) -> dict:
         with open("capitals/country_capitals.json", "r", encoding="utf-8") as f:
@@ -78,7 +80,9 @@ class Capitals:
                         self.tried = True
                         selected = button.text
                         if selected == self.current_capital:
+                            button.color = self.green
                             return True
                         else:
+                            button.color = self.red
                             return False
             return None
