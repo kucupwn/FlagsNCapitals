@@ -1,7 +1,7 @@
 import pygame
 
 
-class AnswerLabel:
+class CountryAnswerLabel:
     def __init__(self) -> None:
         self.font = pygame.font.Font(None, 64)
         self.revealed = False
