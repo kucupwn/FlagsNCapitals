@@ -6,7 +6,7 @@ from ui_components.button import Button
 from ui_components.counter import Counter
 from ui_components.flags import Flags
 from ui_components.capitals import Capitals
-from utils.img_loader import get_resource_path
+from utils.asset_loader import get_resource_path
 
 
 class Game:
