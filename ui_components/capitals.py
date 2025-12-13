@@ -1,6 +1,8 @@
 import pygame
 import json
+import os
 from random import sample, shuffle
+from ..utils.asset_loader import get_resource_path
 from .button import Button
 
 
@@ -29,9 +31,12 @@ class Capitals:
         """
         Unpacks country_capitals.json to store as a class variable
         """
-        with open("capitals/country_capitals.json", "r", encoding="utf-8") as f:
+        json_path = get_resource_path(os.path.join("capitals", "country_capitals.json"))
+
+        with open(json_path, "r", encoding="utf-8") as f:
             country_capitals = list(json.load(f).items())
-            return country_capitals
+
+        return country_capitals
 
     def get_buttons(self) -> None:
         """
