@@ -1,6 +1,4 @@
 import pygame
-
-# from rapidfuzz import fuzz
 from ui_components.input_box import InputBox
 from ui_components.button import Button
 from ui_components.counter import Counter
