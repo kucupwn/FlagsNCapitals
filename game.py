@@ -40,7 +40,7 @@ class Game:
 
     def is_finished(self) -> bool:
         """
-        Checks if all flags are guessed correctly
+        Checks if all countries are guessed correctly
         """
 
         if len(self.checked_countries) == len(self.flags.flag_list):
@@ -53,7 +53,7 @@ class Game:
     def load_next_country(self) -> None:
         """
         Loads a scaled random flag
-        Sets as current answer
+        Sets as current answer for capital
         """
 
         self.flags.load_random_flag(self.checked_countries)
@@ -73,9 +73,11 @@ class Game:
             if input_text and not self.flags.shown:
                 correct_flag = self.flags.check_answer(input_text)
                 if correct_flag:
+                    # Show 4 answers for capital, if there is
                     if self.capitals.current_capital is not None:
                         self.capitals.shown = True
                     else:
+                        # If no capital, guessing flag is enough
                         self.checked_countries.append(self.flags.current_flag_name)
                     self.flags.shown = True
 
@@ -83,6 +85,7 @@ class Game:
             if capital_result:
                 self.checked_countries.append(self.flags.current_flag_name)
 
+            # Load next country
             if self.next_button.is_clicked(event) or (
                 event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT
             ):
@@ -92,6 +95,7 @@ class Game:
                     self.flags.shown = False
                     self.capitals.shown = False
 
+            # Show answer for flag, if user cannot guess
             if self.show_button.is_clicked(event) or (
                 event.type == pygame.KEYDOWN and event.key == pygame.K_F1
             ):
