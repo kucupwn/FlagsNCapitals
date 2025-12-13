@@ -26,11 +26,17 @@ class Capitals:
         self.red = (200, 0, 0)
 
     def get_country_capitals(self) -> dict:
+        """
+        Unpacks country_capitals.json to store as a class variable
+        """
         with open("capitals/country_capitals.json", "r", encoding="utf-8") as f:
             country_capitals = list(json.load(f).items())
             return country_capitals
 
-    def get_buttons(self):
+    def get_buttons(self) -> None:
+        """
+        Creates answer buttons for capitals (2x2 grid)
+        """
         for i, text in enumerate(self.answers):
             row = i // 2
             col = i % 2
@@ -40,7 +46,11 @@ class Capitals:
                 Button(text, x, y, self.button_width, self.button_height)
             )
 
-    def set_current_answer(self, current_country: str):
+    def set_current_answer(self, current_country: str) -> None:
+        """
+        Sets current correct answer
+        Not showing answers, if no capital for current country
+        """
         self.current_country = current_country
 
         self.current_capital = None
@@ -57,11 +67,16 @@ class Capitals:
 
         self.get_answers()
 
-    def get_answers(self):
+    def get_answers(self) -> None:
+        """
+        Gets 4 answers for capitals
+        """
+        # Exclude correct answer
         wrong_capitals = [
             capital for _, capital in self.capitals if capital != self.current_capital
         ]
 
+        # Wrong answers
         selected_wrong = sample(wrong_capitals, 3)
         self.answers = selected_wrong + [self.current_capital]
         shuffle(self.answers)
@@ -70,17 +85,21 @@ class Capitals:
         self.buttons = []
         self.get_buttons()
 
-    def draw(self, screen: pygame.Surface):
+    def draw(self, screen: pygame.Surface) -> None:
         for button in self.buttons:
             button.draw(screen)
 
-    def event_handler(self, event):
+    def event_handler(self, event) -> None:
+        """
+        Handles click events
+        """
         if not self.tried:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 for button in self.buttons:
                     if button.is_clicked(event):
                         self.tried = True
                         selected = button.text
+                        # Color feedbacks
                         if selected == self.current_capital:
                             button.color = self.green
                             return True
