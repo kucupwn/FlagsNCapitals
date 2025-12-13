@@ -3,7 +3,7 @@ import json
 import os
 from random import sample, shuffle
 from utils.asset_loader import get_resource_path
-from button import Button
+from ui_components.button import Button
 
 
 class Capitals:
