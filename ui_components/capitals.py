@@ -31,7 +31,9 @@ class Capitals:
         """
         Unpacks country_capitals.json to store as a class variable
         """
-        json_path = get_resource_path(os.path.join("capitals", "country_capitals.json"))
+        json_path = get_resource_path(
+            os.path.join("assets/capitals", "country_capitals.json")
+        )
 
         with open(json_path, "r", encoding="utf-8") as f:
             country_capitals = list(json.load(f).items())

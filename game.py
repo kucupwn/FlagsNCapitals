@@ -1,3 +1,4 @@
+import os
 import pygame
 from ui_components.input_box import InputBox
 from ui_components.button import Button
@@ -23,7 +24,7 @@ class Game:
         self.counter = Counter(self.width - 100, self.height - 50)
         self.flags = Flags(self.width, self.height)
         self.capitals = Capitals(self.width, self.height)
-        self.win_img = pygame.image.load(get_resource_path("utils/Congrat.PNG"))
+        self.win_img = pygame.image.load(os.path.join("assets", "Congrat.PNG"))
         self.load_next_country()
 
     def init_pygame(self) -> None:

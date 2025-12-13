@@ -8,7 +8,7 @@ from ui_components.answer_label import CountryAnswerLabel
 
 class Flags:
     def __init__(self, screen_width: int, screen_height: int):
-        self.flags_dir = "flags"
+        self.flags_dir = "assets/flags"
         self.flag_list = self.get_flag_list()
         self.current_flag_name = ""
         self.current_flag_img = None
