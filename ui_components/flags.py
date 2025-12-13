@@ -1,7 +1,7 @@
 import pygame
 import os
 import random
-from utils.img_loader import get_resource_path
+from utils.asset_loader import get_resource_path
 from rapidfuzz import fuzz
 from ui_components.answer_label import CountryAnswerLabel
 
